@@ -1,1 +1,742 @@
-# online-auction-system
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Online Auction System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #232526 0%, #414345 100%);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .card {
+      border-radius: 20px;
+      box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.37);
+      background: #f5f7fa;
+      color: #232526;
+      padding: 32px 24px;
+      margin-bottom: 32px;
+      transition: box-shadow 0.2s;
+    }
+    .nav-tabs {
+      border-bottom: 2px solid #414345;
+    }
+    .nav-tabs .nav-link.active {
+      background-color: #414345;
+      color: #fff;
+      border-radius: 10px 10px 0 0;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(31,38,135,0.10);
+      border: none;
+    }
+    .nav-tabs .nav-link {
+      color: #232526;
+      font-weight: 600;
+      border: none;
+      margin-right: 2px;
+    }
+    .btn-custom {
+      background: linear-gradient(90deg, #232526 0%, #414345 100%);
+      color: #fff;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 16px rgba(31, 38, 135, 0.15);
+      transition: background 0.2s, box-shadow 0.2s;
+      border: none;
+    }
+    .btn-custom:hover {
+      background: linear-gradient(90deg, #414345 0%, #232526 100%);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(31,38,135,0.18);
+    }
+    .btn-danger {
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: none;
+    }
+    .fade {
+      transition: opacity 0.5s ease-in-out;
+    }
+    .tab-pane {
+      padding-top: 16px;
+    }
+    h4 {
+      margin-bottom: 18px;
+      font-weight: 700;
+      color: #232526;
+      letter-spacing: 1px;
+    }
+    .table {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .table-hover tbody tr:hover {
+      background: #f0f4f8;
+      transition: background 0.2s;
+    }
+    .badge-winner {
+      background: linear-gradient(90deg,#2ecc71,#27ae60);
+      color: #fff;
+      font-weight: 700;
+      border-radius: 6px;
+      padding: 4px 8px;
+      display: inline-block;
+    }
+    .badge-loser {
+      background: linear-gradient(90deg,#f39c12,#e67e22);
+      color: #fff;
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 3px 7px;
+      display: inline-block;
+    }
+    .email-card {
+      background: #fff;
+      color: #232526;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+    .email-winner {
+      border-left: 6px solid #27ae60;
+      padding-left: 10px;
+      background: linear-gradient(90deg,#f0fff4,#f9fff9);
+    }
+    .winner-row {
+      background: linear-gradient(90deg,#e6ffed,#dfffe4);
+    }
+    .list-group-item {
+      background: #f5f7fa;
+      color: #232526;
+      border: none;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .alert {
+      border-radius: 10px;
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+    @media (max-width: 600px) {
+      .card { padding: 10px; }
+      .nav-tabs { font-size: 0.9rem; }
+      h4 { font-size: 1.1rem; }
+      .table { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <div class="card p-4">
+      <h2 class="text-center mb-4">Online Auction System</h2>
+      <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="user-tab" data-bs-toggle="tab" data-bs-target="#user" type="button" role="tab">User Management</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="auction-tab" data-bs-toggle="tab" data-bs-target="#auction" type="button" role="tab">Auction Management</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="notification-tab" data-bs-toggle="tab" data-bs-target="#notification" type="button" role="tab">Notifications</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="report-tab" data-bs-toggle="tab" data-bs-target="#report" type="button" role="tab">Reporting</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin" type="button" role="tab">Admin</button>
+        </li>
+      </ul>
+  <div class="tab-content" id="myTabContent">
+        <!-- User Management Tab -->
+  <div class="tab-pane fade show active" id="user" role="tabpanel">
+          <h4>User Management Module</h4>
+          <form class="row g-3 mb-3">
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="username" placeholder="Username">
+            </div>
+            <div class="col-md-4">
+              <input type="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <div class="col-md-4">
+              <select class="form-select" id="role">
+                <option value="bidder">Bidder</option>
+                <option value="seller">Seller</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-custom w-100" id="login-btn">Login</button>
+            </div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-custom w-100" id="register-btn">Register</button>
+            </div>
+          </form>
+        </div>
+        <!-- Auction Management Tab -->
+  <div class="tab-pane fade" id="auction" role="tabpanel">
+          <h4>Auction Management Module</h4>
+          <form class="row g-3 mb-3" id="create-auction-form">
+            <div class="col-md-6">
+              <input type="text" class="form-control" id="auction-title" placeholder="Auction Title">
+            </div>
+            <div class="col-md-6">
+              <input type="number" class="form-control" id="auction-price" placeholder="Starting Price">
+            </div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-custom w-100" id="create-auction-btn">Create Auction</button>
+            </div>
+          </form>
+          <div id="auction-list"></div>
+        </div>
+        <!-- Notification Tab -->
+  <div class="tab-pane fade" id="notification" role="tabpanel">
+          <h4>Notification Module</h4>
+          <div id="notification-list"></div>
+        </div>
+        <!-- Reporting Tab -->
+  <div class="tab-pane fade" id="report" role="tabpanel">
+          <h4>Reporting Module</h4>
+          <div id="report-list"></div>
+        </div>
+        <!-- Admin Tab -->
+  <div class="tab-pane fade" id="admin" role="tabpanel">
+          <h4>Admin Module</h4>
+          <div id="admin-users"></div>
+          <div id="admin-auctions"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Admin logic
+    function renderAdmin() {
+      const user = getLoggedInUser();
+      const users = JSON.parse(localStorage.getItem('auctionUsers') || '{}');
+      const auctions = getAuctions();
+      const usersDiv = document.getElementById('admin-users');
+      const auctionsDiv = document.getElementById('admin-auctions');
+      if (!user || user.role !== 'admin') {
+        usersDiv.innerHTML = '<div class="alert alert-info">Admin access only.</div>';
+        auctionsDiv.innerHTML = '';
+        return;
+      }
+      // User management
+      let userHtml = '<h5>Manage Users</h5>';
+      userHtml += '<table class="table table-bordered"><thead><tr><th>Username</th><th>Role</th><th>Action</th></tr></thead><tbody>';
+      Object.keys(users).forEach(u => {
+        userHtml += `<tr><td>${u}</td><td>${users[u].role}</td><td>`;
+        if (u !== user.username) {
+          userHtml += `<button class="btn btn-danger btn-sm" onclick="deleteUser('${u}')">Delete</button>`;
+        } else {
+          userHtml += '<span class="text-muted">(You)</span>';
+        }
+        userHtml += '</td></tr>';
+      });
+      userHtml += '</tbody></table>';
+      usersDiv.innerHTML = userHtml;
+
+      // Auction management
+      let auctionHtml = '<h5>Manage Auctions</h5>';
+      auctionHtml += '<table class="table table-bordered"><thead><tr><th>Title</th><th>Seller</th><th>Highest Bid</th><th>Highest Bidder</th><th>Winner</th><th>Closed At</th><th>Status</th><th>Action</th></tr></thead><tbody>';
+      auctions.forEach(a => {
+        const status = a.closed ? 'Closed' : 'Open';
+        const closedAt = a.closedAt ? a.closedAt : '-';
+        const winner = a.winner ? a.winner : '-';
+        // losers count clickable
+        const uniqueBidders = [...new Set(a.bids.map(b=>b.bidder))];
+        const losers = uniqueBidders.filter(b => b !== a.winner);
+        const loserHtml = losers.length ? `<button class="btn btn-sm btn-outline-secondary" onclick="showLosersModal(${a.id})">${losers.length} loser${losers.length>1?'s':''}</button>` : '-';
+        auctionHtml += `<tr><td>${a.title}</td><td>${a.seller}</td><td>${a.highestBid}</td><td>${a.highestBidder ? a.highestBidder : '-'}</td><td>${winner}</td><td>${closedAt}</td><td>${status}</td><td>`;
+        if (!a.closed) auctionHtml += `<button class="btn btn-outline-light btn-sm me-1" onclick="closeAuction(${a.id})">Close</button>`;
+        auctionHtml += ` <button class="btn btn-danger btn-sm" onclick="deleteAuction(${a.id})">Delete</button> ${loserHtml}</td></tr>`;
+      });
+      auctionHtml += '</tbody></table>';
+      auctionsDiv.innerHTML = auctionHtml;
+    }
+
+    window.deleteUser = function(username) {
+      let users = JSON.parse(localStorage.getItem('auctionUsers') || '{}');
+      if (users[username]) {
+        delete users[username];
+        localStorage.setItem('auctionUsers', JSON.stringify(users));
+        // Remove login if deleted user was logged in
+        if (localStorage.getItem('auctionLoggedIn') === username) {
+          localStorage.removeItem('auctionLoggedIn');
+        }
+        showMessage('User deleted.', 'success');
+        renderAdmin();
+        updateLoginUI();
+      }
+    };
+
+    window.deleteAuction = function(auctionId) {
+      let auctions = getAuctions();
+      auctions = auctions.filter(a => a.id !== auctionId);
+      saveAuctions(auctions);
+      showMessage('Auction deleted.', 'success');
+      renderAdmin();
+      renderAuctions();
+      renderReport();
+    };
+    // Notification logic
+    function getNotifications(username) {
+      const raw = JSON.parse(localStorage.getItem('notifications_' + username) || '[]');
+      // migrate to structured notifications: {message, time, ts, type, read}
+      const migrated = raw.map(n => {
+        if (!n) return { message: '', time: new Date().toISOString(), ts: Date.now(), type: 'info', read: false };
+        if (typeof n === 'string') {
+          return { message: n, time: new Date().toISOString(), ts: Date.now(), type: 'info', read: false };
+        }
+        // already object: ensure fields
+        const ts = n.ts || (n.time ? Date.parse(n.time) || Date.now() : Date.now());
+        return { message: n.message || '', time: new Date(ts).toISOString(), ts, type: n.type || 'info', read: !!n.read };
+      });
+      // persist migrated form if old format was present
+      try { localStorage.setItem('notifications_' + username, JSON.stringify(migrated)); } catch(e){}
+      return migrated;
+    }
+    function addNotification(username, message, type = 'info') {
+      let notes = getNotifications(username);
+      const note = { message, time: new Date().toISOString(), ts: Date.now(), type, read: false };
+      notes.push(note);
+      localStorage.setItem('notifications_' + username, JSON.stringify(notes));
+    }
+
+    function markNotificationRead(username, idx) {
+      const notes = getNotifications(username);
+      if (!notes[idx]) return;
+      notes[idx].read = true;
+      localStorage.setItem('notifications_' + username, JSON.stringify(notes));
+      renderNotifications();
+    }
+    function deleteNotification(username, idx) {
+      let notes = getNotifications(username);
+      notes.splice(idx,1);
+      localStorage.setItem('notifications_' + username, JSON.stringify(notes));
+      renderNotifications();
+    }
+
+    // human friendly relative time
+    function timeAgo(ts) {
+      if (!ts) return '-';
+      const now = Date.now();
+      const diff = Math.floor((now - ts) / 1000);
+      if (diff < 5) return 'just now';
+      if (diff < 60) return diff + 's ago';
+      if (diff < 3600) return Math.floor(diff/60) + 'm ago';
+      if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+      if (diff < 604800) return Math.floor(diff/86400) + 'd ago';
+      return new Date(ts).toLocaleString();
+    }
+    function renderNotifications() {
+      const user = getLoggedInUser();
+      const list = document.getElementById('notification-list');
+      if (!user) { list.innerHTML = '<div class="alert alert-info">Login to view notifications.</div>'; return; }
+      let notes = getNotifications(user.username);
+      if (notes.length === 0) { list.innerHTML = '<div class="alert alert-info">No notifications.</div>'; return; }
+
+      // filter UI
+      let html = `<div class="d-flex justify-content-between align-items-center mb-2"><div class="d-flex align-items-center"><h6 class="me-3">Inbox</h6><select id="notifFilter" class="form-select form-select-sm me-2" style="width:180px"><option value="all">All</option><option value="winner">Winners</option><option value="loser">Losers</option><option value="outbid">Outbid</option><option value="info">Info</option></select><button class="btn btn-sm btn-outline-light me-2" id="markAllRead">Mark all read</button></div><div><button class="btn btn-sm btn-outline-light" id="exportNotifications">Export</button></div></div>`;
+      const entries = notes.slice().reverse();
+      entries.forEach((n, i) => {
+        const origIdx = notes.length - 1 - i; // map back to original index for actions
+        const isWinner = n.type === 'winner' || /won the auction/.test(n.message);
+        const isUnread = !n.read;
+        html += `<div class="email-card ${isWinner? 'email-winner' : ''} ${isUnread? 'border border-2' : ''}" data-idx="${origIdx}">`;
+        html += `<div>${n.message}</div>`;
+        html += `<div class="d-flex justify-content-between align-items-center mt-1"><small class="text-muted">${timeAgo(n.ts)}</small><div><button class="btn btn-sm btn-outline-light me-1" data-idx="${origIdx}" onclick="markNotificationRead('${user.username}', ${origIdx})">Mark read</button><button class="btn btn-sm btn-outline-light" data-idx="${origIdx}" onclick="deleteNotification('${user.username}', ${origIdx})">Delete</button></div></div>`;
+        html += `</div>`;
+      });
+      list.innerHTML = html;
+
+      document.getElementById('exportNotifications').onclick = function(){
+        const csv = ['Message,Time,Type,Read'].concat(notes.map(n=>`"${n.message.replace(/"/g,'""')}","${new Date(n.ts).toLocaleString()}","${n.type}","${n.read? 'yes':'no' }"`)).join('\n');
+        const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = 'notifications.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+      };
+
+      document.getElementById('markAllRead').onclick = function(){
+        notes = notes.map(n=>({ ...n, read: true }));
+        localStorage.setItem('notifications_' + user.username, JSON.stringify(notes));
+        renderNotifications();
+      };
+
+      // filter handler
+      document.getElementById('notifFilter').onchange = function(){
+        const val = this.value;
+        let filtered = notes.slice().reverse();
+        if (val !== 'all') filtered = filtered.filter(n => n.type === val);
+        // re-render subset
+        const listHtml = filtered.map(n => `<div class="email-card ${n.type==='winner'? 'email-winner':''}"><div>${n.message}</div><div class="text-muted small mt-1">${timeAgo(n.ts)}</div></div>`).join('');
+        list.querySelectorAll('.email-card').forEach(x=>x.remove());
+        list.insertAdjacentHTML('beforeend', listHtml);
+      };
+    }
+
+    // Modal for showing losers
+    // insert modal markup at end of container
+
+    // Reporting logic
+    function renderReport() {
+      const user = getLoggedInUser();
+      const list = document.getElementById('report-list');
+      if (!user) {
+        list.innerHTML = '<div class="alert alert-info">Login to view your auction history.</div>';
+        return;
+      }
+      const auctions = getAuctions();
+      let html = '<h5>Your Auction Activity</h5>';
+      // As seller
+      const myAuctions = auctions.filter(a => a.seller === user.username);
+      if (myAuctions.length > 0) {
+        html += '<b>Auctions Created:</b><ul>';
+        myAuctions.forEach(a => {
+          const winner = a.winner ? a.winner : 'None';
+          const closedAt = a.closedAt ? `, Closed: ${a.closedAt}` : '';
+          const winnerRowCls = (a.winner && a.winner === user.username) ? 'winner-row' : '';
+          html += `<li class="${winnerRowCls}">${a.title} (Highest Bid: ${a.highestBid}, Winner: ${winner}${closedAt})</li>`;
+        });
+        html += '</ul>';
+      }
+      // As bidder
+      const myBids = auctions.flatMap(a => a.bids.filter(b => b.bidder === user.username).map(b => ({ auction: a.title, amount: b.amount, time: b.time })));
+      if (myBids.length > 0) {
+        html += '<b>Bids Placed:</b><ul>';
+        myBids.forEach(b => {
+          html += `<li>${b.auction}: ${b.amount} (${b.time})</li>`;
+        });
+        html += '</ul>';
+      }
+      if (myAuctions.length === 0 && myBids.length === 0) {
+        html += '<div class="alert alert-info">No auction activity yet.</div>';
+      }
+      list.innerHTML = html;
+    }
+  // Helper to show feedback messages
+    // Utility: get logged-in user and role
+    function getLoggedInUser() {
+      const username = localStorage.getItem('auctionLoggedIn');
+      const users = JSON.parse(localStorage.getItem('auctionUsers') || '{}');
+      if (username && users[username]) {
+        return { username, role: users[username].role };
+      }
+      return null;
+    }
+
+    // Auction logic
+    function getAuctions() {
+      return JSON.parse(localStorage.getItem('auctions') || '[]');
+    }
+    function saveAuctions(auctions) {
+      localStorage.setItem('auctions', JSON.stringify(auctions));
+    }
+
+    // Create auction (seller only)
+    document.getElementById('create-auction-btn').onclick = function() {
+      const user = getLoggedInUser();
+      if (!user || user.role !== 'seller') {
+        showMessage('Only sellers can create auctions.', 'error');
+        return;
+      }
+      const title = document.getElementById('auction-title').value.trim();
+      const price = parseFloat(document.getElementById('auction-price').value);
+      if (!title || isNaN(price) || price <= 0) {
+        showMessage('Enter valid auction title and starting price.', 'error');
+        return;
+      }
+      let auctions = getAuctions();
+      auctions.push({
+        id: Date.now(),
+        title,
+        price,
+        seller: user.username,
+        highestBid: price,
+        highestBidder: null,
+        bids: [],
+        closed: false,
+        winner: null
+      });
+      saveAuctions(auctions);
+      showMessage('Auction created!', 'success');
+      document.getElementById('create-auction-form').reset();
+      renderAuctions();
+    };
+
+    // Render auction list and bid form
+    function renderAuctions() {
+      const user = getLoggedInUser();
+      const auctions = getAuctions();
+      const list = document.getElementById('auction-list');
+      if (auctions.length === 0) {
+        list.innerHTML = '<div class="alert alert-info">No auctions available.</div>';
+        return;
+      }
+  let html = '<table class="table table-striped"><thead><tr><th>Title</th><th>Seller</th><th>Start Price</th><th>Highest Bid</th><th>Highest Bidder</th><th>Winner</th><th>Closed At</th><th>Status</th><th>Bid</th></tr></thead><tbody>';
+      auctions.forEach(a => {
+        const statusBadge = a.closed ? '<span class="badge bg-secondary">Closed</span>' : '<span class="badge bg-success">Open</span>';
+        html += `<tr>
+          <td>${a.title}</td>
+          <td>${a.seller}</td>
+          <td>${a.price}</td>
+          <td>${a.highestBid}</td>
+          <td>${a.highestBidder ? a.highestBidder : '-'}</td>
+          <td>`;
+        if (a.closed && a.winner) {
+          html += `<span class="badge-winner">${a.winner}</span>`;
+        } else if (a.closed && !a.winner) {
+          html += `<span class="badge-loser">No winner</span>`;
+        } else {
+          html += '-';
+        }
+  html += `</td><td>${a.closedAt ? a.closedAt : '-'}</td><td>${statusBadge}</td><td>`;
+        if (a.closed) {
+          // show small list/count of losers
+          const uniqueBidders = [...new Set(a.bids.map(b=>b.bidder))];
+          const losers = uniqueBidders.filter(b => b !== a.winner);
+          if (losers.length) {
+            html += `<button class="btn btn-sm btn-outline-secondary" onclick="showLosersModal(${a.id})">${losers.length} loser${losers.length>1?'s':''}</button>`;
+          } else {
+            html += '<span class="text-muted">No other bidders</span>';
+          }
+        } else if (user && user.role === 'bidder') {
+          html += `<input type="number" min="${a.highestBid + 1}" class="form-control d-inline w-50" id="bid-${a.id}" placeholder="Your bid">
+          <button class="btn btn-custom btn-sm ms-1" onclick="placeBid(${a.id})">Bid</button>`;
+        } else if (user && user.role === 'seller' && user.username === a.seller) {
+          html += `<button class="btn btn-outline-light btn-sm" onclick="closeAuction(${a.id})">Close Auction</button>`;
+        } else {
+          html += '<span class="text-muted">Login as bidder to bid</span>';
+        }
+        if (!a.closed && user && user.role === 'admin') {
+          html += ` <button class="btn btn-danger btn-sm ms-1" onclick="closeAuction(${a.id})">Force Close</button>`;
+        }
+        html += `</td></tr>`;
+      });
+      html += '</tbody></table>';
+      list.innerHTML = html;
+    }
+
+    // Place bid (bidder only)
+    window.placeBid = function(auctionId) {
+      const user = getLoggedInUser();
+      if (!user || user.role !== 'bidder') {
+        showMessage('Only bidders can place bids.', 'error');
+        return;
+      }
+      let auctions = getAuctions();
+      let auction = auctions.find(a => a.id === auctionId);
+      if (!auction) {
+        showMessage('Auction not found.', 'error');
+        return;
+      }
+      if (auction.closed) {
+        showMessage('Auction is closed. You cannot bid.', 'error');
+        return;
+      }
+      const bidInput = document.getElementById('bid-' + auctionId);
+      const bidValue = parseFloat(bidInput.value);
+      if (isNaN(bidValue) || bidValue <= auction.highestBid) {
+        showMessage('Bid must be higher than current highest bid.', 'error');
+        return;
+      }
+      // Notify previous highest bidder if outbid
+      if (auction.highestBidder && auction.highestBidder !== user.username) {
+        addNotification(auction.highestBidder, `You were outbid on auction '${auction.title}'.`, 'outbid');
+      }
+      auction.highestBid = bidValue;
+      auction.highestBidder = user.username;
+      auction.bids.push({ bidder: user.username, amount: bidValue, time: new Date().toLocaleString() });
+      saveAuctions(auctions);
+      showMessage('Bid placed!', 'success');
+  addNotification(user.username, `You placed a bid of ${bidValue} on auction '${auction.title}'.`, 'bid');
+      renderAuctions();
+      renderNotifications();
+    };
+
+    // Close auction: set closed, determine winner, notify winner and losers
+    window.closeAuction = function(auctionId) {
+      let auctions = getAuctions();
+      let auction = auctions.find(a => a.id === auctionId);
+      if (!auction) { showMessage('Auction not found', 'error'); return; }
+      if (auction.closed) { showMessage('Auction already closed', 'info'); return; }
+      auction.closed = true;
+      auction.closedAt = new Date().toLocaleString();
+      auction.winner = auction.highestBidder || null;
+      // notify winner and losers
+      const winners = auction.winner ? [auction.winner] : [];
+  if (auction.winner) addNotification(auction.winner, `You won the auction '${auction.title}' with ${auction.highestBid}.`, 'winner');
+      // notify all bidders who lost
+      const losers = [...new Set(auction.bids.map(b => b.bidder))].filter(b => b !== auction.winner);
+  losers.forEach(l => addNotification(l, `Auction '${auction.title}' ended. You did not win.`, 'loser'));
+      saveAuctions(auctions);
+      showMessage('Auction closed.', 'success');
+      renderAuctions();
+      renderAdmin();
+      renderReport();
+      renderNotifications();
+    };
+
+    // Show losers modal
+    window.showLosersModal = function(auctionId) {
+      const auctions = getAuctions();
+      const a = auctions.find(x=>x.id===auctionId);
+      if (!a) return;
+      const uniqueBidders = [...new Set(a.bids.map(b=>b.bidder))];
+      const losers = uniqueBidders.filter(b => b !== a.winner);
+      const body = document.getElementById('losersModalBody');
+      if (!losers.length) {
+        body.innerHTML = '<div class="alert alert-info">No other bidders</div>';
+      } else {
+        body.innerHTML = losers.map(u => `<div class="email-card">${u}</div>`).join('');
+      }
+      const modal = new bootstrap.Modal(document.getElementById('losersModal'));
+      modal.show();
+    };
+
+    // Re-render auctions on login/logout
+    function updateLoginUI() {
+      const username = localStorage.getItem('auctionLoggedIn');
+      let info = document.getElementById('login-info');
+      let users = JSON.parse(localStorage.getItem('auctionUsers') || '{}');
+      if (!info) {
+        info = document.createElement('div');
+        info.id = 'login-info';
+        info.className = 'mt-2';
+        document.querySelector('#user').insertBefore(info, document.querySelector('#user form').nextSibling);
+      }
+      if (username && users[username]) {
+        info.innerHTML = `<span class="badge bg-success">Logged in as: ${username} (${users[username].role})</span> <button class="btn btn-danger btn-sm ms-2" id="logout-btn">Logout</button>`;
+        document.getElementById('logout-btn').onclick = function() {
+          localStorage.removeItem('auctionLoggedIn');
+          updateLoginUI();
+          renderAuctions();
+          renderNotifications();
+          renderReport();
+        };
+      } else {
+        info.innerHTML = '';
+      }
+  renderAuctions();
+  renderNotifications();
+  renderReport();
+  renderAdmin();
+    }
+    updateLoginUI();
+    function showMessage(msg, type = 'info') {
+      let alert = document.getElementById('user-alert');
+      if (!alert) {
+        alert = document.createElement('div');
+        alert.id = 'user-alert';
+        alert.className = 'alert mt-2';
+        document.querySelector('#user form').appendChild(alert);
+      }
+      alert.textContent = msg;
+      alert.className = 'alert mt-2 alert-' + (type === 'error' ? 'danger' : type === 'success' ? 'success' : 'info');
+      setTimeout(() => { alert.textContent = ''; alert.className = 'alert mt-2'; }, 3000);
+    }
+
+    // Simple hash function for password (not secure for production)
+    function hashPassword(pw) {
+      let hash = 0;
+      for (let i = 0; i < pw.length; i++) {
+        hash = ((hash << 5) - hash) + pw.charCodeAt(i);
+        hash |= 0;
+      }
+      return hash.toString();
+    }
+
+    // Registration logic
+    document.getElementById('register-btn').onclick = function() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
+      if (!username || !password) {
+        showMessage('Please enter username and password.', 'error');
+        return;
+      }
+      let users = JSON.parse(localStorage.getItem('auctionUsers') || '{}');
+      if (users[username]) {
+        showMessage('Username already exists.', 'error');
+        return;
+      }
+      users[username] = { password: hashPassword(password), role: role };
+      localStorage.setItem('auctionUsers', JSON.stringify(users));
+      showMessage('Registration successful! You can now log in.', 'success');
+    };
+
+    // Login logic
+    document.getElementById('login-btn').onclick = function() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      let users = JSON.parse(localStorage.getItem('auctionUsers') || '{}');
+      if (users[username] && users[username].password === hashPassword(password)) {
+        localStorage.setItem('auctionLoggedIn', username);
+        showMessage('Login successful!', 'success');
+        updateLoginUI();
+        renderAuctions();
+        renderNotifications();
+        renderReport();
+        renderAdmin();
+      } else {
+        showMessage('Invalid username or password.', 'error');
+      }
+    };
+
+    // Update UI for logged-in user and show role
+    function updateLoginUI() {
+      const username = localStorage.getItem('auctionLoggedIn');
+      let info = document.getElementById('login-info');
+      let users = JSON.parse(localStorage.getItem('auctionUsers') || '{}');
+      if (!info) {
+        info = document.createElement('div');
+        info.id = 'login-info';
+        info.className = 'mt-2';
+        document.querySelector('#user').insertBefore(info, document.querySelector('#user form').nextSibling);
+      }
+      if (username && users[username]) {
+        info.innerHTML = `<span class="badge bg-success">Logged in as: ${username} (${users[username].role})</span> <button class="btn btn-danger btn-sm ms-2" id="logout-btn">Logout</button>`;
+        document.getElementById('logout-btn').onclick = function() {
+          localStorage.removeItem('auctionLoggedIn');
+          updateLoginUI();
+          renderAuctions();
+          renderNotifications();
+          renderReport();
+          renderAdmin();
+        };
+      } else {
+        info.innerHTML = '';
+      }
+      renderAuctions();
+      renderNotifications();
+      renderReport();
+      renderAdmin();
+    }
+    updateLoginUI();
+  </script>
+  <!-- Losers modal -->
+  <div class="modal fade" id="losersModal" tabindex="-1" aria-labelledby="losersModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="losersModalLabel">Other Bidders</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="losersModalBody">
+          <!-- filled dynamically -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+</div>
+    </div>
+  </div>
+</body>
